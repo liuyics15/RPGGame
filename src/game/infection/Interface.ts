@@ -2,32 +2,29 @@
 // Copyright (c) 2018 LIUYICS15
 ////////////////////////////////////////////////////////////////////////////////
 
-import {EInfectionType} from "../../define/GameDefine";
+import {EInfectionType, IInfectionIndicator} from "../../define/GameDefine";
+import {IExecuteData, IIndicatorHandle, IIndicatorRecord, ITraceable} from "../Interface";
 
 /**
  * 影响管理器
  */
-export interface IInfectionManager {
-    //创建影响
-    createInfection(taker:any,data:IInfectionIndicator):IInfectionData;
-    //创建交互影响
-    createInteractiveInfection(executor:any,taker:any,data:IInfectionIndicator):IInfectionData;
-    //移除影响
-    removeInfection(data:IInfectionData):void;
-}
-
-//影响指示
-export interface IInfectionIndicator {
-    //影响类型
-    type:EInfectionType;
-    //次级类型
-    subType:number;
+export interface IInfectionHandle extends IIndicatorHandle {
+    //执行指标
+    execute(params:IInfectionIndicator,executor?:ITraceable):IInfectionRecord|string;
+    //描述指标
+    describeIndicator(data:IInfectionIndicator):string;
+    //描述运行
+    describeData(data:IInfectionData):string;
 }
 
 //影响数据
-export interface IInfectionData {
+export interface IInfectionData extends IExecuteData {
     //直接释放者
     directExecutor:any;
     //源头释放者
     originExecutor:any;
+}
+
+export interface IInfectionRecord extends IIndicatorRecord {
+
 }
