@@ -1,0 +1,8 @@
+#example for custom config file
+
+#config avatar
+avatar: 105
+#config beta-name
+beta.name: 200
+#config bate-sex
+beta.sex: 20

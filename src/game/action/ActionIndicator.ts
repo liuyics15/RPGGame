@@ -1,0 +1,47 @@
+import {KeyPropertyDic} from "../property/KeyPropertyDic";
+import {IKeyPropertyHandle, IKeyPropertyLock} from "../property/Interface";
+import {EEntityAction, EEntityStatus} from "../../define/GameDefine";
+
+//行动状态
+export interface IActionIndicator {
+    //是否允许行为
+    isAllowed(action:EEntityAction):boolean;
+    //设置是否允许
+    setActionAllowed(action:EEntityAction,value:boolean,setter:IKeyPropertyHandle):void;
+    //锁住行动状态
+    lockAction(action:EEntityAction,setter:IKeyPropertyLock):void;
+    //解锁
+    unlockAction(action:EEntityAction,setter:IKeyPropertyLock):void;
+}
+
+class ActionIndicator_P extends KeyPropertyDic implements IActionIndicator {
+
+    constructor() {
+        super();
+
+        this.registerProperty(EEntityAction.MOVE,true);
+        this.registerProperty(EEntityAction.ATTACK,true);
+        this.registerProperty(EEntityAction.DEFEND,true);
+        this.registerProperty(EEntityAction.SKILL,true);
+        this.registerProperty(EEntityAction.USE_ITEM,true);
+    }
+
+    //是否允许行为
+    isAllowed(action:EEntityAction):boolean {
+        return this.getProperty(action);
+    }
+    //设置是否允许
+    setActionAllowed(action:EEntityAction,value:boolean,setter:IKeyPropertyHandle):void {
+        this.setProperty(action,value,setter);
+    }
+    //锁住行动状态
+    lockAction(action:EEntityAction,setter:IKeyPropertyLock):void {
+        this.lockProperty(action,setter);
+    }
+    //解锁
+    unlockAction(action:EEntityAction,setter:IKeyPropertyLock):void {
+        this.unlockProperty(action,setter);
+    }
+}
+
+export const ActionIndicator:{new():IActionIndicator} = ActionIndicator_P;
