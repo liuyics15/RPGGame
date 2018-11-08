@@ -31,9 +31,9 @@ export interface IPointTracingHandle extends IExecuteHandle {
 //目标追踪
 export interface IMoveTracingHandle extends IExecuteHandle {
     //创建运行数据
-    create(indicator:IMoveTracingIndicator,start:IMapPoint,target:ITraceableEntity):IBulletData;
+    create(indicator:IMoveTracingIndicator,start:IMapPoint,target:ITraceableEntity):IMoveBulletData;
     //更新框架
-    updateExecute(data:IBulletData):IBulletUpdateResult;
+    updateExecute(data:IMoveBulletData):IBulletUpdateResult;
 }
 
 //更新结果
@@ -91,8 +91,17 @@ export interface IPointBulletData extends IBulletData {
 }
 
 //移动弹道
-export interface IMoveBulletData extends IPointBulletData {
-
+export interface IMoveBulletData extends IBulletData {
+    //类型指定
+    targetMode:EBallisticTarget.ENTITY;
+    //跟踪目标
+    targetEntity:ITraceableEntity;
+    //起始帧戳
+    startFrame:number;
+    //当前速度
+    currentSpeed:number;
+    //当前位置
+    currentPoint:IMapPoint;
 }
 
 //目标类型
