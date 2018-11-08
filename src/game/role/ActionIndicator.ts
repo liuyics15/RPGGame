@@ -3,7 +3,7 @@ import {IKeyPropertyHandle, IKeyPropertyLock} from "../property/Interface";
 import {EEntityAction, EEntityStatus} from "../../define/GameDefine";
 
 //行动状态
-export interface IActionIndicator {
+export interface IActionStatusDic {
     //是否允许行为
     isAllowed(action:EEntityAction):boolean;
     //设置是否允许
@@ -14,7 +14,7 @@ export interface IActionIndicator {
     unlockAction(action:EEntityAction,setter:IKeyPropertyLock):void;
 }
 
-class ActionIndicator_P extends KeyPropertyDic implements IActionIndicator {
+class ActionIndicator_P extends KeyPropertyDic implements IActionStatusDic {
 
     constructor() {
         super();
@@ -22,7 +22,7 @@ class ActionIndicator_P extends KeyPropertyDic implements IActionIndicator {
         this.registerProperty(EEntityAction.MOVE,true);
         this.registerProperty(EEntityAction.ATTACK,true);
         this.registerProperty(EEntityAction.DEFEND,true);
-        this.registerProperty(EEntityAction.SKILL,true);
+        this.registerProperty(EEntityAction.SPELL,true);
         this.registerProperty(EEntityAction.USE_ITEM,true);
     }
 
@@ -44,4 +44,4 @@ class ActionIndicator_P extends KeyPropertyDic implements IActionIndicator {
     }
 }
 
-export const ActionIndicator:{new():IActionIndicator} = ActionIndicator_P;
+export const ActionIndicator:{new():IActionStatusDic} = ActionIndicator_P;

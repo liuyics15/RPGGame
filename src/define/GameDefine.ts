@@ -45,10 +45,12 @@ export interface IInfectionIndicator extends IIndicator {
 export interface IBallisticIndicator extends IIndicator {
     //大类定义
     type:EIndicatorType.BALLISTIC;
+    //子弹类型
+    bulletType:EBulletType;
     //弹道类型
-    bulletType:EBulletTrace;
+    ballisticType:EBallisticType;
     //特效ID
-    bulletEffectID:number;
+    bulletEffectID?:number;
 }
 
 //交互指标
@@ -75,6 +77,7 @@ export enum EInteractiveType {
     GIVE,       //赠送
     STEAL,      //偷窃
     FOLLOW,     //跟随
+    TRACK,      //跟踪
 }
 
 //实体状态
@@ -152,10 +155,18 @@ export enum ETriggerType {
     EVENT,          //事件触发
 }
 
+//子弹类型
+export enum EBulletType {
+    POINT,      //点触发
+    LINE,       //线形触发
+    CIRCLE,     //环形触发
+    ARK,        //锥形触发
+    CUSTOM,     //自定义
+}
+
 //弹道枚举
-export enum EBulletTrace {
-    TRIGGER_NOW,    //即时触发
-    FIXED_DURATION, //固定时间
-    FIXED_SPEED,    //固定速度
-    CUSTOM_TRACE    //自定义
+export enum EBallisticType {
+    FIXED_DELAY,    //固定延时
+    DIRECT_LINE,    //直线运动
+    MOVE_TRACKING,  //活物追踪
 }

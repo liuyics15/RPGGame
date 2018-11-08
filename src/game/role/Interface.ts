@@ -4,20 +4,19 @@
 
 import {IActionSubject, ICMDSubject, IEventSubject} from "../IObserver";
 import {IClockObserver} from "../../time/IClock";
-import {IInteractively} from "../Interface";
-import {IActionIndicator} from "../action/ActionIndicator";
+import {IActionStatusDic} from "./ActionIndicator";
 import {IKeyPropertyDic} from "../property/Interface";
 import {EEntityAction, EEntityStatus} from "../../define/GameDefine";
 
 //实体
-export interface IEntity extends ICMDSubject,IEventSubject,IActionSubject,IClockObserver,IInteractively {
+export interface IEntity extends ICMDSubject,IEventSubject,IActionSubject,IClockObserver {
 
     id:number;
 
     //当前状态
     currentStatus:EEntityStatus;
     //行动状态
-    actionStatus:IActionIndicator;
+    actionStatus:IActionStatusDic;
     //关键属性
     keyProperty:IKeyPropertyDic;
 

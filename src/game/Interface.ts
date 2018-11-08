@@ -1,5 +1,12 @@
 import {EIndicatorType, IIndicator} from "../define/GameDefine";
+import {IGameMap} from "./map/Interface";
 
+export interface IGameMain {
+
+    gameMap:IGameMap;
+}
+
+export let GameInstance:IGameMain;
 
 //指标中心
 export interface IIndicatorMaster {
@@ -21,20 +28,34 @@ export interface IIndicatorHandle {
     updateFrame(timestamp:number):void;
     //执行指标
     execute(params:IIndicator,executor?:ITraceable):IIndicatorRecord|string;
+    //终止指标
+    terminal(params:IIndicatorRecord):void;
     //描述指标
     describeIndicator(data:IIndicator):string;
     //描述运行
     describeData(data:IExecuteData):string;
 }
 
-//动态参数
-export interface IDynamicArgs {
-
+//执行管理
+export interface IExecuteHandle {
+    //当前帧戳
+    currentFrame:number;
+    //创建运行数据
+    create(indicator:IIndicator,...args):IExecuteData;
+    //更新框架
+    updateExecute(data:IExecuteData):IUpdateResult;
 }
 
 //执行数据
 export interface IExecuteData {
+    //到达帧戳
+    reachFrame:number;
+}
 
+//更新结果
+export interface IUpdateResult {
+    //回收标记
+    isDying:boolean;
 }
 
 //指标记录
