@@ -39,7 +39,7 @@ export interface IMoveTracingHandle extends IExecuteHandle {
 //更新结果
 export interface IBulletUpdateResult extends IUpdateResult {
     //捕获目标
-    reachedTarget:boolean;
+    isReached:boolean;
 }
 
 //地点追踪
@@ -56,6 +56,8 @@ export interface IMoveTracingIndicator extends IBallisticIndicator {
     ballisticType:EBallisticType.MOVE_TRACKING;
     //追踪对象
     targetID:number;
+    //追踪速度
+    speed:number;
 }
 
 //弹道记录
@@ -76,6 +78,8 @@ export interface IBulletData extends IExecuteData {
     currentPoint:IMapPoint;
     //目标类型
     targetMode:EBallisticTarget;
+    //处理器
+    handle:IExecuteHandle;
 }
 
 //定点弹道
@@ -88,6 +92,8 @@ export interface IPointBulletData extends IBulletData {
     startPoint:IMapPoint;
     //起始帧戳
     startFrame:number;
+
+    handle:IPointTracingHandle;
 }
 
 //移动弹道
@@ -102,6 +108,8 @@ export interface IMoveBulletData extends IBulletData {
     currentSpeed:number;
     //当前位置
     currentPoint:IMapPoint;
+
+    handle:IMoveTracingHandle;
 }
 
 //目标类型

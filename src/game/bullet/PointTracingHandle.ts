@@ -30,14 +30,15 @@ class PointTracingHandle_P implements IPointTracingHandle {
             duration = 1;
         }
         let reachFrame = startFrame + duration;
-        return {startPoint,targetPoint,targetMode,startFrame,movingMode,frameTrigger,currentPoint,reachFrame};
+        let handle = this;
+        return {startPoint,targetPoint,targetMode,startFrame,movingMode,frameTrigger,currentPoint,reachFrame,handle};
     }
 
     //更新框架
     updateExecute(data:IPointBulletData):IBulletUpdateResult {
         let reachedTarget = this.currentFrame >= data.reachFrame;
         let isDying = reachedTarget;
-        return {reachedTarget,isDying};
+        return {isReached: reachedTarget,isDying};
     }
 }
 

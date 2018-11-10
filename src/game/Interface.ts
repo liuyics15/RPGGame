@@ -25,7 +25,7 @@ export interface IIndicatorHandle {
     //指标类型
     type:EIndicatorType;
     //更新框架
-    updateFrame(timestamp:number):void;
+    updateFrame(frameStamp:number):void;
     //执行指标
     execute(params:IIndicator,executor?:ITraceable):IIndicatorRecord|string;
     //终止指标
