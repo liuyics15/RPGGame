@@ -1,7 +1,7 @@
 import {EIndicatorType, IIndicator} from "../define/GameDefine";
 import {IGameMap} from "./map/Interface";
 
-export interface IGameMain {
+export interface IGameMain extends IIndicatorMaster {
 
     gameMap:IGameMap;
 }
@@ -13,7 +13,7 @@ export interface IIndicatorMaster {
     //注册管理
     registerHandle(type:EIndicatorType,handle:IIndicatorHandle):void;
     //执行指标
-    execute(params:IIndicator,executor:ITraceable):IIndicatorRecord|string;
+    execute(params:IIndicator,executor?:ITraceable):IIndicatorRecord|string;
     //更新框架
     updateFrame(timestamp:number):void;
     //执行源头
@@ -50,6 +50,8 @@ export interface IExecuteHandle {
 export interface IExecuteData {
     //到达帧戳
     reachFrame:number;
+    //触发指标
+    nextIndicator?:IIndicator;
 }
 
 //更新结果

@@ -1,12 +1,9 @@
 import {
-    IBallisticRecord, IBulletData,
-    IBulletManager,
-    IMoveTracingHandle, IMoveTracingIndicator,
-    IPointTracingHandle,
-    IPointTracingIndicator
+    IBallisticRecord, IBulletData, IBulletManager, IBulletUpdateResult,
+    IMoveTracingHandle, IMoveTracingIndicator, IPointTracingHandle, IPointTracingIndicator
 } from "./Interface";
 import {EBallisticType, EIndicatorType, IBallisticIndicator, IIndicator} from "../../define/GameDefine";
-import {IExecuteData, IIndicatorRecord, ITraceable} from "../Interface";
+import {GameInstance, IExecuteData, IIndicatorRecord, ITraceable} from "../Interface";
 import {PointTracingHandle} from "./PointTracingHandle";
 import {MoveTracingHandle} from "./MoveTracingHandle";
 import {ITraceableEntity} from "../map/Interface";
@@ -43,10 +40,18 @@ export class BulletManager implements IBulletManager {
             bullet.handle.updateExecute(bullet);
         });
         let currentSchedule = this._frameSchedule[frameStamp];
-        if (currentSchedule && currentSchedule.length) {
-            currentSchedule.forEach(bullet => {
-                bullet.handle.updateExecute(bullet);
-            })
+        if (currentSchedule) {
+            let totalSchedules = currentSchedule.length;
+            for(let i = totalSchedules - 1;i >= 0; i--) {
+                let bullet = currentSchedule[i];
+                let result = <IBulletUpdateResult>bullet.handle.updateExecute(bullet);
+                if (result.isReached) {
+                    this.triggerBullet(bullet);
+                }
+                else if (result.isDying) {
+                    this.removeBullet(bullet);
+                }
+            }
         }
     }
 
@@ -100,6 +105,24 @@ export class BulletManager implements IBulletManager {
     //描述运行
     describeData(data:IExecuteData):string {
         return '';
+    }
+
+    //子触弹发
+    private triggerBullet(data:IBulletData):void {
+        this.removeBullet(data);
+        if (data.nextIndicator) {
+            GameInstance.execute(data.nextIndicator);
+        }
+    }
+
+    //子弹移除
+    private removeBullet(data:IBulletData):void {
+        if (data.frameTrigger) {
+            this.removeFrameTrigger(data);
+        }
+        else {
+            this.removeSchedule(data.reachFrame,data);
+        }
     }
 
     //添加时间表
