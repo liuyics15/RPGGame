@@ -1,12 +1,17 @@
 import {
-    IBallisticRecord, IBulletData, IBulletManager, IBulletUpdateResult,
-    IMoveTracingHandle, IMoveTracingIndicator, IPointTracingHandle, IPointTracingIndicator
+    IBulletData,
+    IBulletManager,
+    IBulletUpdateResult,
+    IIndicatorParams,
+    IMoveTracingHandle,
+    IMoveTracingIndicator,
+    IPointTracingHandle,
+    IPointTracingIndicator
 } from "./Interface";
-import {EBallisticType, EIndicatorType, IBallisticIndicator, IIndicator} from "../../define/GameDefine";
-import {GameInstance, IExecuteData, IIndicatorRecord, ITraceable} from "../Interface";
+import {EBallisticType, EIndicatorType, EParamKeywords, IBallisticIndicator, IIndicator} from "../../define/GameDefine";
+import {GameInstance, IExecuteData} from "../Interface";
 import {PointTracingHandle} from "./PointTracingHandle";
 import {MoveTracingHandle} from "./MoveTracingHandle";
-import {ITraceableEntity} from "../map/Interface";
 
 export class BulletManager implements IBulletManager {
 
@@ -56,39 +61,31 @@ export class BulletManager implements IBulletManager {
     }
 
     //执行指标
-    execute(params:IBallisticIndicator,executor:ITraceableEntity,taker?:ITraceableEntity):IBallisticRecord|string {
-        let type = params.ballisticType;
-        let record:IBallisticRecord = {
-            indicator:params,
-            data:null,
-            parent:null
-        };
+    execute(indicator:IBallisticIndicator,param:IIndicatorParams):void {
+        let type = indicator.ballisticType;
         let bullet:IBulletData;
         switch (type) {
             case EBallisticType.FIXED_DELAY:
-                bullet = this._pointHandle.create(<IPointTracingIndicator>params,executor.currentPoint,taker.currentPoint);
+                bullet = this._pointHandle.create(<IPointTracingIndicator>indicator,param[EParamKeywords.EXECUTOR_POINT], param[EParamKeywords.TARGET_POINT]);
                 break;
             case EBallisticType.MOVE_TRACKING:
-                bullet = this._moveHandle.create(<IMoveTracingIndicator>params,executor.currentPoint,taker);
+                bullet = this._moveHandle.create(<IMoveTracingIndicator>indicator,param[EParamKeywords.EXECUTOR_POINT],param[EParamKeywords.TARGET_ENTITY]);
                 break;
             default:
-                return "没有该类型的执行器实现";
+                console.warn("没有该类型的执行器实现");
         }
         if (bullet) {
-            record.data = bullet;
             if (bullet.frameTrigger) {
                 this._beatingDataVec.push(bullet);
             }
             else {
                 this.addSchedule(bullet.reachFrame,bullet);
             }
-            return record;
         }
     }
 
     //终止指标
-    terminal(params:IIndicatorRecord):void {
-        let bullet = <IBulletData>params.data;
+    terminal(bullet:IBulletData):void {
         if (bullet.frameTrigger) {
             this.removeFrameTrigger(bullet);
         }
@@ -111,7 +108,7 @@ export class BulletManager implements IBulletManager {
     private triggerBullet(data:IBulletData):void {
         this.removeBullet(data);
         if (data.nextIndicator) {
-            GameInstance.execute(data.nextIndicator);
+            GameInstance.execute(data.nextIndicator,data);
         }
     }
 

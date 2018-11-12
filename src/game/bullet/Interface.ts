@@ -4,11 +4,10 @@
 //  整个行为的过程包含：1.发起判定->2.创建弹道->3.影响判定->4.影响执行
 ////////////////////////////////////////////////////////////////////////////////
 
-import {EBallisticType, EIndicatorType, IBallisticIndicator, IIndicator} from "../../define/GameDefine";
+import {EBallisticType, EIndicatorType, EParamKeywords, IBallisticIndicator, IIndicator} from "../../define/GameDefine";
 import {IMapPoint, ITraceableEntity} from "../map/Interface";
 import {
-    IExecuteData, IExecuteHandle, IIndicatorHandle, IIndicatorRecord,
-    ITraceable, IUpdateResult
+    IExecuteData, IExecuteHandle, IIndicatorHandle, ITraceable, IUpdateResult
 } from "../Interface";
 
 //行为管理
@@ -17,7 +16,15 @@ export interface IBulletManager extends IIndicatorHandle {
     type:EIndicatorType.BALLISTIC;
 
     //执行指标
-    execute(params:IBallisticIndicator,executor:ITraceable):IBallisticRecord|string;
+    execute(indicator:IBallisticIndicator,param:IIndicatorParams):void;
+}
+
+//动态参数
+export interface IIndicatorParams {
+    [EParamKeywords.TARGET_ENTITY]?:ITraceableEntity;
+    [EParamKeywords.EXECUTOR_ENTITY]?:ITraceableEntity;
+    [EParamKeywords.TARGET_POINT]?:IMapPoint;
+    [EParamKeywords.EXECUTOR_POINT]?:IMapPoint;
 }
 
 //地点追踪
@@ -60,22 +67,14 @@ export interface IMoveTracingIndicator extends IBallisticIndicator {
     speed:number;
 }
 
-//弹道记录
-export interface IBallisticRecord extends IIndicatorRecord {
-    //指标
-    indicator:IBallisticIndicator;
-    //数据
-    data:IBulletData;
-}
-
 //弹道数据
-export interface IBulletData extends IExecuteData {
+export interface IBulletData extends IExecuteData,IIndicatorParams {
+    //执行位置
+    [EParamKeywords.EXECUTOR_POINT]:IMapPoint;
     //弹道模式
     movingMode:EBallisticType;
     //每帧触发
     frameTrigger:boolean;
-    //当前位置
-    currentPoint:IMapPoint;
     //目标类型
     targetMode:EBallisticTarget;
     //处理器
@@ -87,9 +86,7 @@ export interface IPointBulletData extends IBulletData {
     //类型指定
     targetMode:EBallisticTarget.POINT;
     //地点指定
-    targetPoint:IMapPoint;
-    //起始指定
-    startPoint:IMapPoint;
+    [EParamKeywords.TARGET_POINT]:IMapPoint;
     //起始帧戳
     startFrame:number;
 
@@ -101,7 +98,7 @@ export interface IMoveBulletData extends IBulletData {
     //类型指定
     targetMode:EBallisticTarget.ENTITY;
     //跟踪目标
-    targetEntity:ITraceableEntity;
+    [EParamKeywords.TARGET_ENTITY]:ITraceableEntity;
     //起始帧戳
     startFrame:number;
     //当前速度

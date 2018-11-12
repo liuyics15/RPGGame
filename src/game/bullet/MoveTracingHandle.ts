@@ -9,7 +9,7 @@ class MoveTracingHandle_P implements IMoveTracingHandle {
     currentFrame:number;
 
     //创建运行数据
-    create(indicator:IMoveTracingIndicator,start:IMapPoint,targetEntity:ITraceableEntity):IMoveBulletData {
+    create(indicator:IMoveTracingIndicator,executorPoint:IMapPoint,targetEntity:ITraceableEntity):IMoveBulletData {
         //到达帧戳
         let reachFrame:number = null;
         //弹道模式
@@ -17,7 +17,7 @@ class MoveTracingHandle_P implements IMoveTracingHandle {
         //每帧触发
         let frameTrigger:boolean = true;
         //当前位置
-        let currentPoint:IMapPoint = start;
+        let currentPoint = executorPoint;
         //目标类型
         let targetMode = EBallisticTarget.ENTITY;
         //起始帧戳
@@ -25,7 +25,7 @@ class MoveTracingHandle_P implements IMoveTracingHandle {
         //当前速度
         let currentSpeed:number = indicator.speed;
         let handle = this;
-        return {reachFrame,movingMode,frameTrigger,currentPoint,targetMode,startFrame,currentSpeed,targetEntity,handle};
+        return {reachFrame,movingMode,frameTrigger,currentPoint, executorPoint,targetMode,startFrame,currentSpeed,targetEntity,handle};
     }
 
     //更新框架

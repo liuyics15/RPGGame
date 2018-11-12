@@ -3,6 +3,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 //指标类型
+import {ITraceable} from "../game/Interface";
+
 export enum EIndicatorType {
     ACTION,         //单体动作
     INFECTION,      //单体影响
@@ -19,6 +21,16 @@ export interface IIndicator {
     startTrigger?:IIndicator;
     //完成触发
     endTrigger?:IIndicator;
+}
+
+//
+export enum EParamKeywords {
+    EXECUTOR = "executor",
+    TARGET = "target",
+    TARGET_ENTITY = "targetEntity",
+    TARGET_POINT = "targetPoint",
+    EXECUTOR_ENTITY = "executorEntity",
+    EXECUTOR_POINT = "executorPoint"
 }
 
 //行为指标
