@@ -2,9 +2,27 @@
 // Copyright (c) 2018 LIUYICS15
 ////////////////////////////////////////////////////////////////////////////////
 
-//指标类型
-import {ITraceable} from "../game/Interface";
+//指标+参数->运行数据 => 下个指标+参数 整体记录
 
+import {IExecuteData} from "../game/Interface";
+
+//执行任务
+export interface IExecuteTask {
+    //指标列表
+    indicators:IIndicator[];
+    //当前指标
+    currentIndex:number;
+    //当前指标
+    currentIndicator:IIndicator;
+    //运行数据
+    currentData:IExecuteData;
+    //参数面版
+    paramBoard:{[property:string]:any};
+    //运行数据列表
+    executeDataVec:IExecuteData[];
+}
+
+//指标类型
 export enum EIndicatorType {
     ACTION,         //单体动作
     INFECTION,      //单体影响
@@ -21,6 +39,8 @@ export interface IIndicator {
     startTrigger?:IIndicator;
     //完成触发
     endTrigger?:IIndicator;
+    //收集参数
+    collectParams:EParamKeywords[];
 }
 
 //

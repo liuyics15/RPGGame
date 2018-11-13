@@ -1,6 +1,6 @@
 import {
     IBulletData,
-    IBulletManager,
+    IBulletManager, IBulletTask,
     IBulletUpdateResult,
     IIndicatorParams,
     IMoveTracingHandle,
@@ -61,26 +61,37 @@ export class BulletManager implements IBulletManager {
     }
 
     //执行指标
-    execute(indicator:IBallisticIndicator,param:IIndicatorParams):void {
+    execute(task:IBulletTask):boolean {
+        let indicator = task.currentIndicator;
         let type = indicator.ballisticType;
+        let param = task.paramBoard;
         let bullet:IBulletData;
         switch (type) {
             case EBallisticType.FIXED_DELAY:
-                bullet = this._pointHandle.create(<IPointTracingIndicator>indicator,param[EParamKeywords.EXECUTOR_POINT], param[EParamKeywords.TARGET_POINT]);
+                if (param[EParamKeywords.EXECUTOR_POINT] && param[EParamKeywords.TARGET_POINT]) {
+                    bullet = this._pointHandle.create(<IPointTracingIndicator>indicator,param[EParamKeywords.EXECUTOR_POINT], param[EParamKeywords.TARGET_POINT]);
+                }
                 break;
             case EBallisticType.MOVE_TRACKING:
-                bullet = this._moveHandle.create(<IMoveTracingIndicator>indicator,param[EParamKeywords.EXECUTOR_POINT],param[EParamKeywords.TARGET_ENTITY]);
+                if (param[EParamKeywords.EXECUTOR_POINT] && param[EParamKeywords.TARGET_ENTITY]) {
+                    bullet = this._moveHandle.create(<IMoveTracingIndicator>indicator,param[EParamKeywords.EXECUTOR_POINT],param[EParamKeywords.TARGET_ENTITY]);
+                }
                 break;
             default:
                 console.warn("没有该类型的执行器实现");
         }
         if (bullet) {
+            bullet.task = task;
             if (bullet.frameTrigger) {
                 this._beatingDataVec.push(bullet);
             }
             else {
                 this.addSchedule(bullet.reachFrame,bullet);
             }
+            return true;
+        }
+        else {
+            return false;
         }
     }
 
@@ -107,8 +118,9 @@ export class BulletManager implements IBulletManager {
     //子触弹发
     private triggerBullet(data:IBulletData):void {
         this.removeBullet(data);
-        if (data.nextIndicator) {
-            GameInstance.execute(data.nextIndicator,data);
+        if (data.task) {
+            data.task.currentIndex ++;
+            GameInstance.execute(data.task);
         }
     }
 

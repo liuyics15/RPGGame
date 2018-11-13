@@ -4,7 +4,7 @@
 
 import {IActionSubject, ICMDSubject, IEventSubject} from "../IObserver";
 import {IClockObserver} from "../../time/IClock";
-import {IActionStatusDic} from "./ActionIndicator";
+import {IActionStatusDic} from "./ActionStatusDic";
 import {IKeyPropertyDic} from "../property/Interface";
 import {EEntityAction, EEntityStatus} from "../../define/GameDefine";
 

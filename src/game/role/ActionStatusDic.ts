@@ -14,7 +14,7 @@ export interface IActionStatusDic {
     unlockAction(action:EEntityAction,setter:IKeyPropertyLock):void;
 }
 
-class ActionIndicator_P extends KeyPropertyDic implements IActionStatusDic {
+class ActionStatusDic_P extends KeyPropertyDic implements IActionStatusDic {
 
     constructor() {
         super();
@@ -44,4 +44,4 @@ class ActionIndicator_P extends KeyPropertyDic implements IActionStatusDic {
     }
 }
 
-export const ActionIndicator:{new():IActionStatusDic} = ActionIndicator_P;
+export const ActionStatusDic:{new():IActionStatusDic} = ActionStatusDic_P;

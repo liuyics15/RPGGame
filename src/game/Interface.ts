@@ -1,4 +1,4 @@
-import {EIndicatorType, EParamKeywords, IIndicator} from "../define/GameDefine";
+import {EIndicatorType, EParamKeywords, IExecuteTask, IIndicator} from "../define/GameDefine";
 import {IGameMap} from "./map/Interface";
 
 export interface IGameMain extends IIndicatorMaster {
@@ -13,11 +13,9 @@ export interface IIndicatorMaster {
     //注册管理
     registerHandle(type:EIndicatorType,handle:IIndicatorHandle):void;
     //执行指标
-    execute(indicator:IIndicator,param:IIndicatorParams):void;
+    execute(task:IExecuteTask):void;
     //更新框架
     updateFrame(timestamp:number):void;
-    //执行源头
-    trackExecutor(indicator:IIndicator):ITraceable;
 }
 
 //指标管理
@@ -27,7 +25,7 @@ export interface IIndicatorHandle {
     //更新框架
     updateFrame(frameStamp:number):void;
     //执行指标
-    execute(indicator:IIndicator,...args):void;
+    execute(task:IExecuteTask):boolean;
     //终止指标
     terminal(params:IExecuteData):void;
     //描述指标
@@ -57,7 +55,7 @@ export interface IExecuteData extends IIndicatorParams {
     //到达帧戳
     reachFrame:number;
     //触发指标
-    nextIndicator?:IIndicator;
+    task:IExecuteTask;
 }
 
 //更新结果

@@ -4,7 +4,14 @@
 //  整个行为的过程包含：1.发起判定->2.创建弹道->3.影响判定->4.影响执行
 ////////////////////////////////////////////////////////////////////////////////
 
-import {EBallisticType, EIndicatorType, EParamKeywords, IBallisticIndicator, IIndicator} from "../../define/GameDefine";
+import {
+    EBallisticType,
+    EIndicatorType,
+    EParamKeywords,
+    IBallisticIndicator,
+    IExecuteTask,
+    IIndicator
+} from "../../define/GameDefine";
 import {IMapPoint, ITraceableEntity} from "../map/Interface";
 import {
     IExecuteData, IExecuteHandle, IIndicatorHandle, ITraceable, IUpdateResult
@@ -16,7 +23,17 @@ export interface IBulletManager extends IIndicatorHandle {
     type:EIndicatorType.BALLISTIC;
 
     //执行指标
-    execute(indicator:IBallisticIndicator,param:IIndicatorParams):void;
+    execute(task:IBulletTask):boolean;
+}
+
+//子弹任务
+export interface IBulletTask extends IExecuteTask {
+    //当前指标
+    currentIndicator:IBallisticIndicator;
+    //当前运行
+    currentData:IBulletData;
+    //参数面板
+    paramBoard:IIndicatorParams;
 }
 
 //动态参数
