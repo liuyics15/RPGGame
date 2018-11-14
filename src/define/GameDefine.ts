@@ -1,10 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) 2018 LIUYICS15
 ////////////////////////////////////////////////////////////////////////////////
+import {IExecuteData} from "../game/Interface";
 
 //指标+参数->运行数据 => 下个指标+参数 整体记录
-
-import {IExecuteData} from "../game/Interface";
 
 //执行任务
 export interface IExecuteTask {
@@ -36,9 +35,9 @@ export interface IIndicator {
     //指标类型
     type:EIndicatorType;
     //开始触发
-    startTrigger?:IIndicator;
+    startTrigger?:IExecuteTask;
     //完成触发
-    endTrigger?:IIndicator;
+    endTrigger?:IExecuteTask;
     //收集参数
     collectParams:EParamKeywords[];
 }
