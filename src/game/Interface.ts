@@ -1,4 +1,4 @@
-import {EIndicatorType, EParamKeywords, IExecuteTask, IIndicator} from "../define/GameDefine";
+import {EIndicatorType, EDevKeywords, IExecuteTask, IIndicator} from "../define/GameDefine";
 import {IGameMap} from "./map/Interface";
 
 export interface IGameMain extends IIndicatorMaster {
@@ -36,8 +36,8 @@ export interface IIndicatorHandle {
 
 //动态参数
 export interface IIndicatorParams {
-    [EParamKeywords.EXECUTOR]?:ITraceable;
-    [EParamKeywords.TARGET]?:ITraceable;
+    [EDevKeywords.EXECUTOR]?:ITraceable;
+    [EDevKeywords.TARGET]?:ITraceable;
 }
 
 //执行管理

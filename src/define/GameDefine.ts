@@ -39,17 +39,33 @@ export interface IIndicator {
     //完成触发
     endTrigger?:IExecuteTask;
     //收集参数
-    collectParams:EParamKeywords[];
+    collectParams:EDevKeywords[];
 }
 
-//
-export enum EParamKeywords {
+//开发关键
+export const enum EDevKeywords {
     EXECUTOR = "executor",
     TARGET = "target",
     TARGET_ENTITY = "targetEntity",
     TARGET_POINT = "targetPoint",
     EXECUTOR_ENTITY = "executorEntity",
     EXECUTOR_POINT = "executorPoint"
+}
+
+//角色关键
+export const enum ERolePropKey {
+    HEALTH = "hp",          //生命值
+    MAX_HEALTH = "mhp",     //最大生命
+    MAGIC = "mp",           //魔法值
+    MAX_MAGIC = "mmp",      //最大魔法
+    ENERGY = "ep",          //能量值
+    MAX_ENERGY = "mep",     //最大能量
+
+    ACCEPT_ATTACK = "aa",   //允许被打
+    ACCEPT_CHOOSE = "ac",   //允许选中
+
+    HIT_WEIGHT = "wh",      //命中权重
+    MISS_WEIGHT = "wm",     //闪避权重
 }
 
 //行为指标
@@ -102,7 +118,7 @@ export interface ITriggerIndicator {
 }
 
 //互动类型
-export enum EInteractiveType {
+export const enum EInteractiveType {
     ATTACK,     //攻击
     SKILL,      //技能
     GIVE,       //赠送
@@ -112,7 +128,7 @@ export enum EInteractiveType {
 }
 
 //实体状态
-export enum EEntityStatus {
+export const enum EEntityStatus {
     HALT,       //静止
     MOVING,     //移动
     ATTACKING,  //普攻
@@ -123,7 +139,7 @@ export enum EEntityStatus {
 }
 
 //主动行为
-export enum EEntityAction {
+export const enum EEntityAction {
     MOVE,       //移动
     TALK,       //A bord thought
     DEFEND,     //防守
@@ -134,20 +150,20 @@ export enum EEntityAction {
 }
 
 //被动行为
-export enum EPassiveAction {
+export const enum EPassiveAction {
     UNDER_ATTACK,   //受到攻击
     UNDER_SKILL,    //受到技能
     RECEIVED_ITEM,  //收到道具
 }
 
 //触发对象
-export enum ETriggerTarget {
+export const enum ETriggerTarget {
     MAP,    //地图
     ENTITY  //实体
 }
 
 //游戏属性键
-export enum EPropertyKey {
+export const enum EPropertyKey {
     HEALTH,         //生命值
     MAX_HEALTH,     //最大生命
     MAGIC,          //魔法值
@@ -163,7 +179,7 @@ export enum EPropertyKey {
 }
 
 //影响类型
-export enum EInfectionType {
+export const enum EInfectionType {
     STATUS,         //影响状态
     PROPERTY,       //影响属性
     FORCE_ACTION,   //强制动作
@@ -172,7 +188,7 @@ export enum EInfectionType {
 }
 
 //影响指标
-export enum EPropertyInfection {
+export const enum EPropertyInfection {
     ATTACK_DAMAGE,  //攻击伤害
     SKILL_DAMAGE,   //技能伤害
     PURE_DAMAGE,    //真实伤害
@@ -180,14 +196,14 @@ export enum EPropertyInfection {
 }
 
 //触发类型
-export enum ETriggerType {
+export const enum ETriggerType {
     PROPERTY,       //属性触发
     ACTION,         //行为触发
     EVENT,          //事件触发
 }
 
 //子弹类型
-export enum EBulletType {
+export const enum EBulletType {
     POINT,      //点触发
     LINE,       //线形触发
     CIRCLE,     //环形触发
@@ -196,7 +212,7 @@ export enum EBulletType {
 }
 
 //弹道枚举
-export enum EBallisticType {
+export const enum EBallisticType {
     FIXED_DELAY,    //固定延时
     DIRECT_LINE,    //直线运动
     MOVE_TRACKING,  //活物追踪

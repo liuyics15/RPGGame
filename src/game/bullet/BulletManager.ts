@@ -8,7 +8,7 @@ import {
     IPointTracingHandle,
     IPointTracingIndicator
 } from "./Interface";
-import {EBallisticType, EIndicatorType, EParamKeywords, IBallisticIndicator, IIndicator} from "../../define/GameDefine";
+import {EBallisticType, EIndicatorType, EDevKeywords, IBallisticIndicator, IIndicator} from "../../define/GameDefine";
 import {GameInstance, IExecuteData} from "../Interface";
 import {PointTracingHandle} from "./PointTracingHandle";
 import {MoveTracingHandle} from "./MoveTracingHandle";
@@ -68,13 +68,13 @@ export class BulletManager implements IBulletManager {
         let bullet:IBulletData;
         switch (type) {
             case EBallisticType.FIXED_DELAY:
-                if (param[EParamKeywords.EXECUTOR_POINT] && param[EParamKeywords.TARGET_POINT]) {
-                    bullet = this._pointHandle.create(<IPointTracingIndicator>indicator,param[EParamKeywords.EXECUTOR_POINT], param[EParamKeywords.TARGET_POINT]);
+                if (param[EDevKeywords.EXECUTOR_POINT] && param[EDevKeywords.TARGET_POINT]) {
+                    bullet = this._pointHandle.create(<IPointTracingIndicator>indicator,param[EDevKeywords.EXECUTOR_POINT], param[EDevKeywords.TARGET_POINT]);
                 }
                 break;
             case EBallisticType.MOVE_TRACKING:
-                if (param[EParamKeywords.EXECUTOR_POINT] && param[EParamKeywords.TARGET_ENTITY]) {
-                    bullet = this._moveHandle.create(<IMoveTracingIndicator>indicator,param[EParamKeywords.EXECUTOR_POINT],param[EParamKeywords.TARGET_ENTITY]);
+                if (param[EDevKeywords.EXECUTOR_POINT] && param[EDevKeywords.TARGET_ENTITY]) {
+                    bullet = this._moveHandle.create(<IMoveTracingIndicator>indicator,param[EDevKeywords.EXECUTOR_POINT],param[EDevKeywords.TARGET_ENTITY]);
                 }
                 break;
             default:

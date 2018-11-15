@@ -7,7 +7,7 @@
 import {
     EBallisticType,
     EIndicatorType,
-    EParamKeywords,
+    EDevKeywords,
     IBallisticIndicator,
     IExecuteTask,
     IIndicator
@@ -38,10 +38,10 @@ export interface IBulletTask extends IExecuteTask {
 
 //动态参数
 export interface IIndicatorParams {
-    [EParamKeywords.TARGET_ENTITY]?:ITraceableEntity;
-    [EParamKeywords.EXECUTOR_ENTITY]?:ITraceableEntity;
-    [EParamKeywords.TARGET_POINT]?:IMapPoint;
-    [EParamKeywords.EXECUTOR_POINT]?:IMapPoint;
+    [EDevKeywords.TARGET_ENTITY]?:ITraceableEntity;
+    [EDevKeywords.EXECUTOR_ENTITY]?:ITraceableEntity;
+    [EDevKeywords.TARGET_POINT]?:IMapPoint;
+    [EDevKeywords.EXECUTOR_POINT]?:IMapPoint;
 }
 
 //地点追踪
@@ -87,7 +87,7 @@ export interface IMoveTracingIndicator extends IBallisticIndicator {
 //弹道数据
 export interface IBulletData extends IExecuteData,IIndicatorParams {
     //执行位置
-    [EParamKeywords.EXECUTOR_POINT]:IMapPoint;
+    [EDevKeywords.EXECUTOR_POINT]:IMapPoint;
     //弹道模式
     movingMode:EBallisticType;
     //每帧触发
@@ -103,7 +103,7 @@ export interface IPointBulletData extends IBulletData {
     //类型指定
     targetMode:EBallisticTarget.POINT;
     //地点指定
-    [EParamKeywords.TARGET_POINT]:IMapPoint;
+    [EDevKeywords.TARGET_POINT]:IMapPoint;
     //起始帧戳
     startFrame:number;
 
@@ -115,7 +115,7 @@ export interface IMoveBulletData extends IBulletData {
     //类型指定
     targetMode:EBallisticTarget.ENTITY;
     //跟踪目标
-    [EParamKeywords.TARGET_ENTITY]:ITraceableEntity;
+    [EDevKeywords.TARGET_ENTITY]:ITraceableEntity;
     //起始帧戳
     startFrame:number;
     //当前速度
