@@ -1,4 +1,7 @@
-import {IKeyPropertyDic, IKeyPropertyHandle, IKeyPropertyLock, IKeyPropertyWatcher} from "./Interface";
+import {
+    EPropertyValueType, IKeyPropertyDic, IKeyPropertyHandle, IKeyPropertyLock,
+    IKeyPropertyWatcher, IPropertyValue
+} from "./Interface";
 import {EPropertyKey} from "../../define/GameDefine";
 
 export class KeyPropertyDic implements IKeyPropertyDic {
@@ -30,18 +33,29 @@ export class KeyPropertyDic implements IKeyPropertyDic {
         }
     }
     //设置值
-    setProperty(key:number,value:any,setter:IKeyPropertyHandle):void {
+    setProperty(key:number,value:IPropertyValue,setter:IKeyPropertyHandle):void {
+        let curMax = this.getPropertyMax(key);
+        let absValue = this.toAbsValue(curMax,value);
         let locks = this._locksDic[key];
         if (locks && locks.length) {
             let totalLocks = locks.length;
             for(let i = 0;i < totalLocks; i++) {
-                value = locks[i].toPropertyFixed(key,value,setter);
+                absValue = locks[i].toPropertyFixed(key,absValue,curMax,setter);
             }
         }
         let origin = this._propDic[key];
         if (origin != value) {
             this._propDic[key] = value;
             this.notifyChanged(key,value,origin);
+        }
+    }
+
+    private toAbsValue(max:number,value:IPropertyValue):any {
+        switch (value.valueType) {
+            case EPropertyValueType.ABSOLUTE:
+                return value.value;
+            case EPropertyValueType.PERCENT:
+                return max * <number>value.value;
         }
     }
 

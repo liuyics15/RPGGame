@@ -12,7 +12,7 @@ export interface IKeyPropertyDic {
     getProperty(key:number,emptyReturn?:any):any;
     getPropertyMax(key:number,emptyReturn?:any):any;
     //设置值
-    setProperty(key:number,value:any,setter:IKeyPropertyHandle):void;
+    setProperty(key:number,value:IPropertyValue,setter:IKeyPropertyHandle):void;
 
     //关注属性
     watchProperty(key:number,watcher:IKeyPropertyWatcher):void;
@@ -26,6 +26,17 @@ export interface IKeyPropertyDic {
     lockProperty(key:number,setter:IKeyPropertyLock):void;
     //解锁属性
     unlockProperty(key:number,setter:IKeyPropertyLock):void;
+}
+
+export const enum EPropertyValueType {
+    PERCENT,
+    ABSOLUTE
+}
+
+//属性值
+export interface IPropertyValue {
+    valueType:EPropertyValueType;
+    value:number|boolean|string;
 }
 
 //
@@ -45,5 +56,5 @@ export interface IKeyPropertyHandle {
 export interface IKeyPropertyLock {
 
     //请求设置属性
-    toPropertyFixed(key:number,value:any,setter:IKeyPropertyHandle):any;
+    toPropertyFixed(key:number,value:any,max:any,setter:IKeyPropertyHandle):any;
 }

@@ -38,6 +38,7 @@ export interface IIndicatorHandle {
 export interface IIndicatorParams {
     [EDevKeywords.EXECUTOR]?:ITraceable;
     [EDevKeywords.TARGET]?:ITraceable;
+    [EDevKeywords.CURRENT_TARGETS]?:ITraceable[];
 }
 
 //执行管理
@@ -68,4 +69,6 @@ export interface IUpdateResult {
 export interface ITraceable {
     //实体标识
     id:number;
+    //类型验证
+    hasAccess(type:number,sub?:number):boolean;
 }

@@ -22,7 +22,7 @@ export interface IExecuteTask {
 }
 
 //指标类型
-export enum EIndicatorType {
+export const enum EIndicatorType {
     ACTION,         //单体动作
     INFECTION,      //单体影响
     BALLISTIC,      //动态弹道
@@ -49,23 +49,8 @@ export const enum EDevKeywords {
     TARGET_ENTITY = "targetEntity",
     TARGET_POINT = "targetPoint",
     EXECUTOR_ENTITY = "executorEntity",
-    EXECUTOR_POINT = "executorPoint"
-}
-
-//角色关键
-export const enum ERolePropKey {
-    HEALTH = "hp",          //生命值
-    MAX_HEALTH = "mhp",     //最大生命
-    MAGIC = "mp",           //魔法值
-    MAX_MAGIC = "mmp",      //最大魔法
-    ENERGY = "ep",          //能量值
-    MAX_ENERGY = "mep",     //最大能量
-
-    ACCEPT_ATTACK = "aa",   //允许被打
-    ACCEPT_CHOOSE = "ac",   //允许选中
-
-    HIT_WEIGHT = "wh",      //命中权重
-    MISS_WEIGHT = "wm",     //闪避权重
+    EXECUTOR_POINT = "executorPoint",
+    CURRENT_TARGETS = "currentTargets"
 }
 
 //行为指标
