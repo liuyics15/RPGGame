@@ -3,13 +3,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 import {IActionSubject, ICMDSubject, IEventSubject} from "../IObserver";
-import {IClockObserver} from "../../time/IClock";
+import {IFrameObserver} from "../../time/IFrameClock";
 import {IActionStatusDic} from "./ActionStatusDic";
 import {IKeyPropertyDic} from "../property/Interface";
 import {EEntityAction, EEntityStatus} from "../../define/GameDefine";
 
 //实体
-export interface IEntity extends ICMDSubject,IEventSubject,IActionSubject,IClockObserver {
+export interface IEntity extends ICMDSubject,IEventSubject,IActionSubject,IFrameObserver {
 
     id:number;
 

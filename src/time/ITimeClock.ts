@@ -1,5 +1,5 @@
 //时钟
-export interface IClock {
+export interface ITimeClock {
 
     //延时调用
     delayCall(timeout:number,callback:(...args)=>void,thisArg?:any,...args):number;
@@ -7,13 +7,13 @@ export interface IClock {
     cancelDelayCall(handle:number):boolean;
 
     //增加观察
-    addObserver(watcher:IClockObserver):void;
+    addObserver(watcher:ITimeObserver):void;
     //删除观察
-    removeObserver(watcher:IClockObserver):boolean;
+    removeObserver(watcher:ITimeObserver):boolean;
 }
 
 //时钟观察者
-export interface IClockObserver {
+export interface ITimeObserver {
     //更新时间
     updateTime(timestamp:number):void;
 }
